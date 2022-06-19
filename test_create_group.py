@@ -6,27 +6,27 @@ from group import Group
 class TestCreateGroup:
     def setup_method(self):
         self.webdriver = WebDriver()
+        self.new_group = Group(group_name='TestGroup', group_header='TestHeader', group_footer='TestFooter')
 
     def test_create_group(self):
         self.open_home_page()
         self.login()
         self.open_groups_page()
-        self.create_group()
+        self.create_group(self.new_group)
         self.open_groups_page()
         self.logout()
 
     def logout(self):
         self.webdriver.find_element(By.LINK_TEXT, "Logout")
 
-    def create_group(self):
-        new_group = Group("TestGroup", "TestHeader", "TestFooter")
+    def create_group(self, group: Group):
         self.webdriver.find_element(By.NAME, "new").click()
         self.webdriver.find_element(By.NAME, "group_name").click()
-        self.webdriver.find_element(By.NAME, "group_name").send_keys(new_group.group_name)
+        self.webdriver.find_element(By.NAME, "group_name").send_keys(group.group_name)
         self.webdriver.find_element(By.NAME, "group_header").click()
-        self.webdriver.find_element(By.NAME, "group_header").send_keys(new_group.group_header)
+        self.webdriver.find_element(By.NAME, "group_header").send_keys(group.group_header)
         self.webdriver.find_element(By.NAME, "group_footer").click()
-        self.webdriver.find_element(By.NAME, "group_footer").send_keys(new_group.group_footer)
+        self.webdriver.find_element(By.NAME, "group_footer").send_keys(group.group_footer)
         self.webdriver.find_element(By.NAME, "submit").click()
 
     def open_groups_page(self):
