@@ -1,6 +1,6 @@
-import pytest
 from selenium.webdriver.firefox.webdriver import WebDriver
 from selenium.webdriver.common.by import By
+from group import Group
 
 
 class TestCreateGroup:
@@ -8,7 +8,31 @@ class TestCreateGroup:
         self.webdriver = WebDriver()
 
     def test_create_group(self):
-        self.webdriver.get("http://localhost:8080/addressbook/")
+        self.open_home_page()
+        self.login()
+        self.open_groups_page()
+        self.create_group()
+        self.open_groups_page()
+        self.logout()
+
+    def logout(self):
+        self.webdriver.find_element(By.LINK_TEXT, "Logout")
+
+    def create_group(self):
+        new_group = Group("TestGroup", "TestHeader", "TestFooter")
+        self.webdriver.find_element(By.NAME, "new").click()
+        self.webdriver.find_element(By.NAME, "group_name").click()
+        self.webdriver.find_element(By.NAME, "group_name").send_keys(new_group.group_name)
+        self.webdriver.find_element(By.NAME, "group_header").click()
+        self.webdriver.find_element(By.NAME, "group_header").send_keys(new_group.group_header)
+        self.webdriver.find_element(By.NAME, "group_footer").click()
+        self.webdriver.find_element(By.NAME, "group_footer").send_keys(new_group.group_footer)
+        self.webdriver.find_element(By.NAME, "submit").click()
+
+    def open_groups_page(self):
+        self.webdriver.find_element(By.LINK_TEXT, "groups").click()
+
+    def login(self):
         self.webdriver.find_element(By.NAME, "user").click()
         self.webdriver.find_element(By.NAME, "user").clear()
         self.webdriver.find_element(By.NAME, "user").send_keys("admin")
@@ -16,16 +40,9 @@ class TestCreateGroup:
         self.webdriver.find_element(By.NAME, "pass").clear()
         self.webdriver.find_element(By.NAME, "pass").send_keys("secret")
         self.webdriver.find_element(By.XPATH, "//input[@value='Login']").click()
-        self.webdriver.find_element(By.LINK_TEXT, "groups").click()
-        self.webdriver.find_element(By.NAME, "new").click()
-        self.webdriver.find_element(By.NAME, "group_name").click()
-        self.webdriver.find_element(By.NAME, "group_name").send_keys("TestGroup")
-        self.webdriver.find_element(By.NAME, "group_header").click()
-        self.webdriver.find_element(By.NAME, "group_header").send_keys("TestHeader")
-        self.webdriver.find_element(By.NAME, "group_footer").click()
-        self.webdriver.find_element(By.NAME, "group_footer").send_keys("TestFooter")
-        self.webdriver.find_element(By.NAME, "submit").click()
-        self.webdriver.find_element(By.LINK_TEXT, "groups").click()
+
+    def open_home_page(self):
+        self.webdriver.get("http://localhost:8080/addressbook/")
 
     def teardown_method(self):
         self.webdriver.quit()
