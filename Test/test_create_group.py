@@ -1,13 +1,4 @@
-from Fixture.application import Application
 from Model.group import Group
-import pytest
-
-
-@pytest.fixture()
-def app():
-    new_app = Application()
-    yield new_app
-    new_app.webdriver.quit()
 
 
 def test_create_group(app):
