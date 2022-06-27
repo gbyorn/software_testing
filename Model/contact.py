@@ -3,7 +3,7 @@ class Contact:
                  company: str, address: str, home_phone: str, mobile_phone: str, work_phone: str, fax: str,
                  first_email: str, second_email: str, third_email: str, homepage: str, b_day: str, b_month: str,
                  b_year: str, a_day: str, a_month: str, a_year: str, second_address: str, second_home: str,
-                 second_notes: str, photo: str):
+                 second_notes: str):
         self.first_name = first_name
         self.middle_name = middle_name
         self.last_name = last_name
@@ -28,4 +28,3 @@ class Contact:
         self.second_address = second_address
         self.second_home = second_home
         self.second_notes = second_notes
-        self.photo = photo
