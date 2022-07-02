@@ -104,7 +104,8 @@ class ContactHelper:
         self.app.find_element(By.NAME, "submit").click()
 
     def open_addresses_home_page(self):
-        self.app.find_element(By.LINK_TEXT, "home").click()
+        if not (self.app.current_url.endswith("/addressbook/")):
+            self.app.find_element(By.LINK_TEXT, "home").click()
 
     def edit_contact(self, contact: Contact):
         self.app.find_element(By.NAME, "selected[]").click()
