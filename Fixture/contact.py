@@ -120,3 +120,7 @@ class ContactHelper:
         self.app.find_element(By.NAME, "selected[]").click()
         self.app.find_element(By.XPATH, '//*[@value="Delete"]').click()
         self.app.switch_to.alert.accept()
+
+    def count(self):
+        self.open_addresses_home_page()
+        return len(self.app.find_elements(By.NAME, "selected[]"))

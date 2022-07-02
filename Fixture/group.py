@@ -36,3 +36,7 @@ class GroupHelper:
     def delete(self):
         self.app.find_element(By.NAME, "selected[]").click()
         self.app.find_element(By.NAME, "delete").click()
+
+    def count(self):
+        self.open_groups_page()
+        return len(self.app.find_elements(By.NAME, "selected[]"))
