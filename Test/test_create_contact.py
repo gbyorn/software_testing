@@ -2,8 +2,6 @@ from Model.contact import Contact
 
 
 def test_create_contact(app):
-    app.open_home_page()
-    app.session.login(username='admin', password='secret')
     app.contact.open_addresses_home_page()
     app.contact.create_contact(Contact(first_name='TestFirstname', middle_name='TestMiddleName',
                                        last_name='TestLastName', nickname='TestNickName', title='TestTitle',
@@ -15,4 +13,3 @@ def test_create_contact(app):
                                        second_address='TestSecAddress', second_home='TestSecHome',
                                        second_notes='TestSecNotes'))
     app.contact.open_addresses_home_page()
-    app.session.logout()
