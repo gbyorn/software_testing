@@ -6,7 +6,7 @@ new_app = None
 
 
 @pytest.fixture()
-def app():
+def app(request):
     global new_app
     if new_app is None:
         new_app = Application()
@@ -14,10 +14,16 @@ def app():
         new_app.session.ensure_login(username='admin', password='secret')
     else:
         if not new_app.is_valid():
-            fixture = Application()
+            new_app = Application()
             new_app.open_home_page()
-            fixture.session.ensure_login(username='admin', password='secret')
+            new_app.session.ensure_login(username='admin', password='secret')
+    return new_app
 
-    yield new_app
-    new_app.session.ensure_logout()
-    new_app.webdriver.quit()
+
+@pytest.fixture(scope='session', autouse=True)
+def teardown(request):
+    def finalizer():
+        new_app.session.ensure_logout()
+        new_app.webdriver.quit()
+    request.addfinalizer(finalizer)
+    return new_app
