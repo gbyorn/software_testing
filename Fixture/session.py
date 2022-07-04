@@ -32,7 +32,7 @@ class SessionHelper:
             self.logout()
 
     def is_logged_in(self):
-        return len(self.app.find_elements(By.NAME, "Logout")) > 0
+        return len(self.app.find_elements(By.LINK_TEXT, "Logout")) > 0
 
     def is_logged_in_as(self, username: str):
         return self.app.find_element(By.XPATH, "//div/div[1]/form/b").text == "(" + username + ")"
