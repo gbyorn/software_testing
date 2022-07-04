@@ -10,13 +10,11 @@ def app(request):
     global new_app
     if new_app is None:
         new_app = Application()
-        new_app.open_home_page()
-        new_app.session.ensure_login(username='admin', password='secret')
     else:
         if not new_app.is_valid():
             new_app = Application()
-            new_app.open_home_page()
-            new_app.session.ensure_login(username='admin', password='secret')
+    new_app.open_home_page()
+    new_app.session.ensure_login(username='admin', password='secret')
     return new_app
 
 
