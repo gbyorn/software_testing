@@ -109,8 +109,9 @@ class ContactHelper:
         if not (self.app.current_url.endswith("/addressbook/")):
             self.app.find_element(By.LINK_TEXT, "home").click()
 
-    def edit_contact(self, contact: Contact):
-        self.app.find_element(By.NAME, "selected[]").click()
+    def edit_contact_by_index(self, index, contact: Contact):
+        self.open_addresses_home_page()
+        self.select_contact_by_index(index)
         self.app.find_element(By.XPATH, '//*[@title="Edit"]').click()
         self.write_base_info(contact)
         self.write_phone_info(contact)
@@ -120,13 +121,23 @@ class ContactHelper:
         self.app.find_element(By.NAME, "update").click()
         self.contact_cache = None
 
-    def delete_contact(self):
-        self.app.find_element(By.NAME, "selected[]").click()
+    def edit_first_contact(self, contact: Contact):
+        self.edit_contact_by_index(0, contact)
+
+    def select_contact_by_index(self, index):
+        self.open_addresses_home_page()
+        self.app.find_elements(By.NAME, 'selected[]')[index].click()
+
+    def delete_contact_by_index(self, index):
+        self.open_addresses_home_page()
+        self.select_contact_by_index(index)
         self.app.find_element(By.XPATH, '//*[@value="Delete"]').click()
-        self.app.switch_to.alert.accept()
         self.contact_cache = None
 
-    def count(self):
+    def delete_first_contact(self):
+        self.delete_contact_by_index(0)
+
+    def count_contacts(self):
         self.open_addresses_home_page()
         return len(self.app.find_elements(By.NAME, "selected[]"))
 
