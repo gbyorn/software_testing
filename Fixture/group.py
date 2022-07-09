@@ -7,6 +7,7 @@ class GroupHelper:
 
     def __init__(self, app: WebDriver):
         self.app = app
+        self.group_cache = None
 
     def write_data(self, group: Group):
         self.app.find_element(By.NAME, "group_name").click()
@@ -23,6 +24,7 @@ class GroupHelper:
         self.app.find_element(By.NAME, "new").click()
         self.write_data(group)
         self.app.find_element(By.NAME, "submit").click()
+        self.group_cache = None
 
     def open_groups_page(self):
         if not (self.app.current_url.endswith("/group.php")
@@ -34,20 +36,24 @@ class GroupHelper:
         self.app.find_element(By.NAME, "edit").click()
         self.write_data(group)
         self.app.find_element(By.NAME, "update").click()
+        self.group_cache = None
 
     def delete(self):
         self.app.find_element(By.NAME, "selected[]").click()
         self.app.find_element(By.NAME, "delete").click()
+        self.group_cache = None
 
     def count(self):
         self.open_groups_page()
         return len(self.app.find_elements(By.NAME, "selected[]"))
 
     def get_group_list(self):
-        self.open_groups_page()
-        groups_list = []
-        for element in self.app.find_elements(By.CSS_SELECTOR, "span.group"):
-            text = element.text
-            group_id = element.find_element(By.NAME, "selected[]").get_attribute("value")
-            groups_list.append(Group(group_name=text, group_id=group_id))
-        return groups_list
+        if self.group_cache is None:
+            self.open_groups_page()
+            self.group_cache = []
+            for element in self.app.find_elements(By.CSS_SELECTOR, "span.group"):
+                text = element.text
+                group_id = element.find_element(By.NAME, "selected[]").get_attribute("value")
+                self.group_cache.append(Group(group_name=text, group_id=group_id))
+        return list(self.group_cache)
+
