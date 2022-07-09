@@ -1,9 +1,16 @@
+from sys import maxsize
+
+
 class Contact:
-    def __init__(self, first_name: str, middle_name: str, last_name: str, nickname: str, title: str,
-                 company: str, address: str, home_phone: str, mobile_phone: str, work_phone: str, fax: str,
-                 first_email: str, second_email: str, third_email: str, homepage: str, b_day: str, b_month: str,
-                 b_year: str, a_day: str, a_month: str, a_year: str, second_address: str, second_home: str,
-                 second_notes: str):
+    def __init__(self, first_name: str | None = None, middle_name: str | None = None, last_name: str | None = None,
+                 nickname: str | None = None, title: str | None = None, company: str | None = None,
+                 address: str | None = None, home_phone: str | None = None, mobile_phone: str | None = None,
+                 work_phone: str | None = None, fax: str | None = None, first_email: str | None = None,
+                 second_email: str | None = None, third_email: str | None = None, homepage: str | None = None,
+                 b_day: str | None = None, b_month: str | None = None, b_year: str | None = None,
+                 a_day: str | None = None, a_month: str | None = None, a_year: str | None = None,
+                 second_address: str | None = None, second_home: str | None = None, second_notes: str | None = None,
+                 contact_id: str | None = None):
         self.first_name = first_name
         self.middle_name = middle_name
         self.last_name = last_name
@@ -28,3 +35,14 @@ class Contact:
         self.second_address = second_address
         self.second_home = second_home
         self.second_notes = second_notes
+        self.contact_id = contact_id
+
+    def __repr__(self):
+        return f'{self.contact_id}: {self.first_name} -- {self.last_name}'
+
+    def __eq__(self, other):
+        return (self.contact_id == other.contact_id or self.contact_id is None or other.contact_id is None) \
+               and self.first_name == other.first_name and self.last_name == other.last_name
+
+    def id_or_max(self):
+        return int(self.contact_id) if self.contact_id else maxsize

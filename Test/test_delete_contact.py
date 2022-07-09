@@ -13,5 +13,10 @@ def test_delete_contact(app):
                                            second_address='TestSecAddress', second_home='TestSecHome',
                                            second_notes='TestSecNotes'))
     app.contact.open_addresses_home_page()
+    old_contacts = app.contact.get_contacts_list()
     app.contact.delete_contact()
     app.contact.open_addresses_home_page()
+    new_contacts = app.contact.get_contacts_list()
+    assert len(old_contacts) - 1 == len(new_contacts)
+    old_contacts = old_contacts[1:]
+    assert old_contacts == new_contacts

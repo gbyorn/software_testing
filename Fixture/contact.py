@@ -125,3 +125,13 @@ class ContactHelper:
     def count(self):
         self.open_addresses_home_page()
         return len(self.app.find_elements(By.NAME, "selected[]"))
+
+    def get_contacts_list(self):
+        self.open_addresses_home_page()
+        contacts_list = []
+        for element in self.app.find_elements(By.CSS_SELECTOR, "tr")[1:]:
+            last_name = element.find_elements(By.CSS_SELECTOR, "td")[1].text
+            first_name = element.find_elements(By.CSS_SELECTOR, "td")[2].text
+            contact_id = element.find_element(By.NAME, "selected[]").get_attribute("value")
+            contacts_list.append(Contact(first_name=first_name, last_name=last_name, contact_id=contact_id))
+        return contacts_list
