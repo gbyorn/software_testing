@@ -112,7 +112,6 @@ class ContactHelper:
     def edit_contact_by_index(self, index, contact: Contact):
         self.open_addresses_home_page()
         self.select_contact_by_index(index)
-        self.app.find_element(By.XPATH, '//*[@title="Edit"]').click()
         self.write_base_info(contact)
         self.write_phone_info(contact)
         self.write_email_info(contact)
@@ -126,7 +125,7 @@ class ContactHelper:
 
     def select_contact_by_index(self, index):
         self.open_addresses_home_page()
-        self.app.find_elements(By.NAME, 'selected[]')[index].click()
+        self.app.find_elements(By.XPATH, '//*[@title="Edit"]')[index].click()
 
     def delete_contact_by_index(self, index):
         self.open_addresses_home_page()
