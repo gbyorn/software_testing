@@ -9,7 +9,9 @@ new_app = None
 def app(request):
     global new_app
     if new_app is None:
-        new_app = Application()
+        browser = request.config.getoption("--browser")
+        base_url = request.config.getoption("--baseUrl")
+        new_app = Application(browser=browser, base_url=base_url)
     else:
         if not new_app.is_valid():
             new_app = Application()
@@ -25,3 +27,8 @@ def teardown(request):
         new_app.webdriver.quit()
     request.addfinalizer(finalizer)
     return new_app
+
+
+def pytest_addoption(parser):
+    parser.addoption("--browser", action="store", default="firefox")
+    parser.addoption("--baseUrl", action="store", default="http://localhost:8080/addressbook/")
