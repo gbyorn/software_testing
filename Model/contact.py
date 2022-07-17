@@ -10,7 +10,7 @@ class Contact:
                  b_day: str | None = None, b_month: str | None = None, b_year: str | None = None,
                  a_day: str | None = None, a_month: str | None = None, a_year: str | None = None,
                  second_address: str | None = None, second_home: str | None = None, second_notes: str | None = None,
-                 contact_id: str | None = None):
+                 contact_id: str | None = None, all_phones_from_home_page=None, all_emails_from_home_page=None):
         self.first_name = first_name
         self.middle_name = middle_name
         self.last_name = last_name
@@ -36,6 +36,8 @@ class Contact:
         self.second_home = second_home
         self.second_notes = second_notes
         self.contact_id = contact_id
+        self.all_phones_from_home_page = all_phones_from_home_page
+        self.all_emails_from_home_page = all_emails_from_home_page
 
     def __repr__(self):
         return f'{self.contact_id}: {self.first_name} -- {self.last_name}'
