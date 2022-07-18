@@ -15,10 +15,10 @@ class GroupHelper:
         self.app.find_element(By.NAME, "group_name").send_keys(group.group_name)
         self.app.find_element(By.NAME, "group_header").click()
         self.app.find_element(By.NAME, "group_header").clear()
-        self.app.find_element(By.NAME, "group_header").send_keys(group.group_name)
+        self.app.find_element(By.NAME, "group_header").send_keys(group.group_header)
         self.app.find_element(By.NAME, "group_footer").click()
         self.app.find_element(By.NAME, "group_footer").clear()
-        self.app.find_element(By.NAME, "group_footer").send_keys(group.group_name)
+        self.app.find_element(By.NAME, "group_footer").send_keys(group.group_footer)
 
     def create_group(self, group: Group):
         self.app.find_element(By.NAME, "new").click()
