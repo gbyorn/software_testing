@@ -13,7 +13,7 @@ def test_compare_contacts(app):
 
 
 def clear(data: str) -> str:
-    return re.sub("[() ]", "", data)
+    return re.sub("[() -]", "", data)
 
 
 def merge_phones(contact: Contact):
