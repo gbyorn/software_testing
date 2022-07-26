@@ -1,22 +1,26 @@
 import pytest
+import json
+import os.path
 from Fixture.application import Application
 
 
 new_app = None
+target = None
 
 
-@pytest.fixture()
+@pytest.fixture
 def app(request):
     global new_app
-    if new_app is None:
-        browser = request.config.getoption("--browser")
-        base_url = request.config.getoption("--baseUrl")
-        new_app = Application(browser=browser, base_url=base_url)
-    else:
-        if not new_app.is_valid():
-            new_app = Application()
+    global target
+    browser = request.config.getoption("--browser")
+    if target is None:
+        config_file = os.path.join(os.path.dirname(os.path.abspath(__file__)), request.config.getoption("--target"))
+        with open(config_file) as config_file:
+            target = json.load(config_file)
+    if new_app is None or new_app.is_valid():
+        new_app = Application(browser=browser, base_url=target['baseUrl'])
     new_app.open_home_page()
-    new_app.session.ensure_login(username='admin', password='secret')
+    new_app.session.ensure_login(username=target['username'], password=target['password'])
     return new_app
 
 
@@ -31,4 +35,4 @@ def teardown(request):
 
 def pytest_addoption(parser):
     parser.addoption("--browser", action="store", default="firefox")
-    parser.addoption("--baseUrl", action="store", default="http://localhost:8080/addressbook/")
+    parser.addoption("--target", action="store", default="target.json")
