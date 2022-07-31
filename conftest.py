@@ -19,7 +19,7 @@ def app(request):
         config_file = os.path.join(os.path.dirname(os.path.abspath(__file__)), request.config.getoption("--target"))
         with open(config_file) as config_file:
             target = json.load(config_file)
-    if new_app is None or new_app.is_valid():
+    if new_app is None or not new_app.is_valid():
         new_app = Application(browser=browser, base_url=target['baseUrl'])
     new_app.open_home_page()
     new_app.session.ensure_login(username=target['username'], password=target['password'])
