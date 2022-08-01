@@ -120,6 +120,17 @@ class ContactHelper:
         self.app.find_element(By.NAME, "update").click()
         self.contact_cache = None
 
+    def edit_contact_by_id(self, contact_id, contact: Contact):
+        self.open_addresses_home_page()
+        self.app.find_element(By.XPATH, f"//*[@href='edit.php?id={contact_id}']").click()
+        self.write_base_info(contact)
+        self.write_phone_info(contact)
+        self.write_email_info(contact)
+        self.write_additional_info(contact)
+        self.write_secondary_info(contact)
+        self.app.find_element(By.NAME, "update").click()
+        self.contact_cache = None
+
     def edit_first_contact(self, contact: Contact):
         self.edit_contact_by_index(0, contact)
 
@@ -127,10 +138,21 @@ class ContactHelper:
         self.open_addresses_home_page()
         self.app.find_elements(By.XPATH, '//*[@title="Edit"]')[index].click()
 
+    def select_contact_by_id(self, contact_id):
+        self.open_addresses_home_page()
+        self.app.find_element(By.XPATH, f"//*[@value='{contact_id}']").click()
+
     def delete_contact_by_index(self, index):
         self.open_addresses_home_page()
         self.select_contact_by_index(index)
         self.app.find_element(By.XPATH, '//*[@value="Delete"]').click()
+        self.contact_cache = None
+
+    def delete_contact_by_id(self, contact_id):
+        self.open_addresses_home_page()
+        self.select_contact_by_id(contact_id)
+        self.app.find_element(By.XPATH, '//*[@value="Delete"]').click()
+        self.app.switch_to.alert.accept()
         self.contact_cache = None
 
     def delete_first_contact(self):

@@ -39,6 +39,14 @@ class GroupHelper:
         self.app.find_element(By.NAME, "update").click()
         self.group_cache = None
 
+    def edit_group_by_id(self, group_id, group: Group):
+        self.open_groups_page()
+        self.select_group_by_id(group_id)
+        self.app.find_element(By.NAME, "edit").click()
+        self.write_data(group)
+        self.app.find_element(By.NAME, "update").click()
+        self.group_cache = None
+
     def edit_first_group(self, group: Group):
         self.edit_group_by_index(0, group)
 
@@ -46,9 +54,19 @@ class GroupHelper:
         self.open_groups_page()
         self.app.find_elements(By.NAME, 'selected[]')[index].click()
 
+    def select_group_by_id(self, group_id):
+        self.open_groups_page()
+        self.app.find_element(By.CSS_SELECTOR, f"input[value='{group_id}'").click()
+
     def delete_group_by_index(self, index):
         self.open_groups_page()
         self.select_group_by_index(index)
+        self.app.find_element(By.NAME, "delete").click()
+        self.group_cache = None
+
+    def delete_group_by_id(self, group_id):
+        self.open_groups_page()
+        self.select_group_by_id(group_id)
         self.app.find_element(By.NAME, "delete").click()
         self.group_cache = None
 
