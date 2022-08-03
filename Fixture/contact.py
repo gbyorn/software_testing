@@ -1,3 +1,5 @@
+import time
+
 from selenium.webdriver.common.by import By
 from selenium.webdriver.firefox.webdriver import WebDriver
 from Model.contact import Contact
@@ -197,4 +199,22 @@ class ContactHelper:
         return Contact(first_name=first_name, last_name=last_name, address=address, first_email=first_email,
                        second_email=second_email, third_email=third_email, home_phone=home_phone,
                        mobile_phone=mobile_phone, work_phone=work_phone, second_home=second_home)
-        
+
+    def remove_contact_from_group(self, group_name, contact_id):
+        self.open_addresses_home_page()
+        self.app.find_element(By.NAME, "group").click()
+        group = self.app.find_element(By.NAME, "group")
+        group.find_element(By.XPATH, f"//option[. = '{group_name}']").click()
+        self.select_contact_by_id(contact_id)
+        self.app.find_element(By.NAME, "remove").click()
+
+    def add_contact_to_group(self, group_name, contact_id):
+        self.open_addresses_home_page()
+        self.select_contact_by_id(contact_id)
+        self.app.find_element(By.NAME, "to_group").click()
+        time.sleep(5)
+        dropdown = self.app.find_element(By.NAME, "to_group")
+        dropdown.find_element(By.XPATH, f"//option[. = '{group_name}']").click()
+        time.sleep(5)
+        self.app.find_element(By.NAME, "add")
+        time.sleep(5)

@@ -2,15 +2,16 @@ from sys import maxsize
 
 
 class Contact:
-    def __init__(self, first_name: str | None = None, middle_name: str | None = None, last_name: str | None = None,
-                 nickname: str | None = None, title: str | None = None, company: str | None = None,
-                 address: str | None = None, home_phone: str | None = None, mobile_phone: str | None = None,
-                 work_phone: str | None = None, fax: str | None = None, first_email: str | None = None,
-                 second_email: str | None = None, third_email: str | None = None, homepage: str | None = None,
-                 b_day: str | None = None, b_month: str | None = None, b_year: str | None = None,
-                 a_day: str | None = None, a_month: str | None = None, a_year: str | None = None,
-                 second_address: str | None = None, second_home: str | None = None, second_notes: str | None = None,
-                 contact_id: str | None = None, all_phones_from_home_page=None, all_emails_from_home_page=None):
+    def __init__(self, first_name: str | None = "", middle_name: str | None = "", last_name: str | None = "",
+                 nickname: str | None = "", title: str | None = "", company: str | None = "",
+                 address: str | None = "", home_phone: str | None = "", mobile_phone: str | None = "",
+                 work_phone: str | None = "", fax: str | None = "", first_email: str | None = "",
+                 second_email: str | None = "", third_email: str | None = "", homepage: str | None = "",
+                 b_day: str | None = "-", b_month: str | None = "-", b_year: str | None = "",
+                 a_day: str | None = "-", a_month: str | None = "-", a_year: str | None = "",
+                 second_address: str | None = "", second_home: str | None = "", second_notes: str | None = "",
+                 contact_id: str | None = None, all_phones_from_home_page=None, all_emails_from_home_page=None,
+                 group_name: str | None = None):
         self.first_name = first_name
         self.middle_name = middle_name
         self.last_name = last_name
@@ -38,6 +39,7 @@ class Contact:
         self.contact_id = contact_id
         self.all_phones_from_home_page = all_phones_from_home_page
         self.all_emails_from_home_page = all_emails_from_home_page
+        self.group_name = group_name
 
     def __repr__(self):
         return f'{self.contact_id}: {self.first_name} -- {self.last_name}'
