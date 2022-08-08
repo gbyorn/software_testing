@@ -1,8 +1,7 @@
-import time
-
 from selenium.webdriver.common.by import By
 from selenium.webdriver.firefox.webdriver import WebDriver
 from Model.contact import Contact
+from Model.group import Group
 
 
 class ContactHelper:
@@ -97,6 +96,11 @@ class ContactHelper:
         self.select_birthday(contact)
         self.select_anniversary(contact)
 
+    def write_group(self, group_name):
+        self.app.find_element(By.NAME, "new_group").click()
+        dropdown = self.app.find_element(By.NAME, "new_group")
+        dropdown.find_element(By.XPATH, f"//option[. = '{group_name}']").click()
+
     def create_contact(self, contact: Contact):
         self.app.find_element(By.LINK_TEXT, "add new").click()
         self.write_base_info(contact)
@@ -104,6 +108,8 @@ class ContactHelper:
         self.write_email_info(contact)
         self.write_additional_info(contact)
         self.write_secondary_info(contact)
+        if contact.group_name is not None:
+            self.write_group(contact.group_name)
         self.app.find_element(By.NAME, "submit").click()
         self.contact_cache = None
 
@@ -212,9 +218,6 @@ class ContactHelper:
         self.open_addresses_home_page()
         self.select_contact_by_id(contact_id)
         self.app.find_element(By.NAME, "to_group").click()
-        time.sleep(5)
         dropdown = self.app.find_element(By.NAME, "to_group")
         dropdown.find_element(By.XPATH, f"//option[. = '{group_name}']").click()
-        time.sleep(5)
         self.app.find_element(By.NAME, "add")
-        time.sleep(5)
