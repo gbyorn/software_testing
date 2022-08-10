@@ -1,7 +1,6 @@
 from selenium.webdriver.common.by import By
 from selenium.webdriver.firefox.webdriver import WebDriver
 from Model.contact import Contact
-from Model.group import Group
 
 
 class ContactHelper:
@@ -208,16 +207,12 @@ class ContactHelper:
 
     def remove_contact_from_group(self, group_name, contact_id):
         self.open_addresses_home_page()
-        self.app.find_element(By.NAME, "group").click()
-        group = self.app.find_element(By.NAME, "group")
-        group.find_element(By.XPATH, f"//option[. = '{group_name}']").click()
+        self.app.find_element(By.XPATH, f"//select[@name='group']/option[. = '{group_name}']").click()
         self.select_contact_by_id(contact_id)
         self.app.find_element(By.NAME, "remove").click()
 
     def add_contact_to_group(self, group_name, contact_id):
         self.open_addresses_home_page()
         self.select_contact_by_id(contact_id)
-        self.app.find_element(By.NAME, "to_group").click()
-        dropdown = self.app.find_element(By.NAME, "to_group")
-        dropdown.find_element(By.XPATH, f"//option[. = '{group_name}']").click()
-        self.app.find_element(By.NAME, "add")
+        self.app.find_element(By.XPATH, f"//select[@name='to_group']/option[. = '{group_name}']").click()
+        self.app.find_element(By.NAME, "add").click()

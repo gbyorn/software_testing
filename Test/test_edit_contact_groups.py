@@ -21,18 +21,17 @@ def test_add_group_to_contact(app, db):
 
     if len(db.get_contacts_list()) == 0 or len(contacts) == 0:
         app.contact.open_addresses_home_page()
-        app.contact.create_contact(Contact(first_name='Contact_without_group', middle_name='', last_name='', nickname='',
-                                           title='', company='', address='', home_phone='', mobile_phone='',
-                                           work_phone='', fax='', first_email='', second_email='', third_email='',
-                                           homepage='', b_day='-', b_month='-', b_year='', a_day='-', a_month='-',
-                                           a_year='', second_address='', second_home='', second_notes=''))
+        app.contact.create_contact(Contact(first_name='Contact_without_group', middle_name='', last_name='',
+                                           nickname='', title='', company='', address='', home_phone='',
+                                           mobile_phone='', work_phone='', fax='', first_email='', second_email='',
+                                           third_email='', homepage='', b_day='-', b_month='-', b_year='', a_day='-',
+                                           a_month='-', a_year='', second_address='', second_home='', second_notes=''))
         contacts = database.get_contacts_not_in_group(group)
 
     contact = random.choice(contacts)
 
     app.contact.add_contact_to_group(group_name=group.group_name, contact_id=contact.contact_id)
     contacts_in_groups_after = database.get_contacts_in_group(group)
-
     assert contact in contacts_in_groups_after
     assert len(contacts_in_groups_before) + 1 == len(contacts_in_groups_after)
 
