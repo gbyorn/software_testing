@@ -38,9 +38,9 @@ class ORMFixture:
     def __init__(self, host, name, user, password):
         try:
             self.db.bind('mysql', host=host, database=name, user=user, password=password, conv=decoders)
-        except:
+            self.db.generate_mapping()
+        except core.BindingError:
             pass
-        self.db.generate_mapping()
 
     def convert_groups_to_model(self, groups):
         def convert(group: Group):
