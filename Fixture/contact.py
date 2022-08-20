@@ -147,7 +147,7 @@ class ContactHelper:
 
     def select_contact_by_id(self, contact_id):
         self.open_addresses_home_page()
-        self.app.find_element(By.XPATH, f"//*[@value='{contact_id}']").click()
+        self.app.find_element(By.XPATH, f"//input[@value='{contact_id}']").click()
 
     def delete_contact_by_index(self, index):
         self.open_addresses_home_page()
