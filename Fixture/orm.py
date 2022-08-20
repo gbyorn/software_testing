@@ -37,7 +37,7 @@ class ORMFixture:
 
     def __init__(self, host, name, user, password):
         try:
-            self.db.bind('mysql', host=host, database=name, user=user, password=password, conv=decoders)
+            self.db.bind('mysql', host=host, database=name, user=user, password=password)
             self.db.generate_mapping()
         except core.BindingError:
             pass
