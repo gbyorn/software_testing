@@ -36,7 +36,10 @@ class ORMFixture:
                      reverse="contacts", lazy=True)
 
     def __init__(self, host, name, user, password):
-        self.db.bind('mysql', host=host, database=name, user=user, password=password, conv=decoders)
+        try:
+            self.db.bind('mysql', host=host, database=name, user=user, password=password, conv=decoders)
+        except:
+            pass
         self.db.generate_mapping()
 
     def convert_groups_to_model(self, groups):
