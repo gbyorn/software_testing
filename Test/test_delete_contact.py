@@ -1,5 +1,6 @@
 import random
 from Model.contact import Contact
+import time
 
 
 def test_delete_contact_db(app, db, check_ui):
@@ -18,6 +19,7 @@ def test_delete_contact_db(app, db, check_ui):
     contact = random.choice(old_contacts)
     app.contact.delete_contact_by_id(contact.contact_id)
     app.contact.open_addresses_home_page()
+    time.sleep(2)
     new_contacts = db.get_contacts_list()
     assert len(old_contacts) - 1 == len(new_contacts)
     old_contacts.remove(contact)
